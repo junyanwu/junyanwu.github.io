@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL&ML,Paper Reading,GCN," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="2 Fast Approximate Convolutions On Graphs 介绍基于图的神经网络模型 $f(X, A)$ 的理论基础   H^{(l+1)} = \sigma( \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} H^{(l)} W^{l} ) \tag2 $\tilde{A} = A + I_N$：加了自">
+<meta name="keywords" content="DL&amp;ML,Paper Reading,GCN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS">
+<meta property="og:url" content="http://yoursite.com/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/index.html">
+<meta property="og:site_name" content="SIGMA&#39;s BLOG">
+<meta property="og:description" content="2 Fast Approximate Convolutions On Graphs 介绍基于图的神经网络模型 $f(X, A)$ 的理论基础   H^{(l+1)} = \sigma( \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} H^{(l)} W^{l} ) \tag2 $\tilde{A} = A + I_N$：加了自">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-23T11:29:20.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS">
+<meta name="twitter:description" content="2 Fast Approximate Convolutions On Graphs 介绍基于图的神经网络模型 $f(X, A)$ 的理论基础   H^{(l+1)} = \sigma( \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} H^{(l)} W^{l} ) \tag2 $\tilde{A} = A + I_N$：加了自">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/"/>
+
+
+
+
+
+  <title>SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS | SIGMA's BLOG</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c1c3b4dcf9699abe12613cd102c07950";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SIGMA's BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">CB116</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junyan Wu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SIGMA's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T11:05:23+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/" class="leancloud_visitors" data-flag-title="SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="2-Fast-Approximate-Convolutions-On-Graphs"><a href="#2-Fast-Approximate-Convolutions-On-Graphs" class="headerlink" title="2 Fast Approximate Convolutions On Graphs"></a>2 Fast Approximate Convolutions On Graphs</h2><ul>
+<li>介绍基于图的神经网络模型 $f(X, A)$ 的理论基础</li>
+</ul>
+<p><br></p>
+<script type="math/tex; mode=display">H^{(l+1)} = \sigma( \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} H^{(l)} W^{l} ) \tag2</script><ul>
+<li>$\tilde{A} = A + I_N$：加了自连接的无向图的邻接矩阵</li>
+<li>$\tilde{D} = \sum<em>{j} \tilde{A}</em>{ij}$：度矩阵</li>
+<li>$W^{l}$：可训练的权重矩阵</li>
+<li>$\sigma(\cdot)$：激活函数，如ReLU</li>
+<li>$H^{(l)} \in R^{N * D}$：matrix of activations in the $l^{th}$ layer; $H^{(0)} = X$</li>
+</ul>
+<p>对于这个propagation rule，论文中提供了一个解释：<strong>Weisfeiler-Lehman algorithm</strong>，附录里面有解释，下面是原论文</p>
+<blockquote>
+<p>Boris Weisfeiler and A. A. Lehmann.  A reduction of a graph to a canonical form and an algebraarising during this reduction.Nauchno-Technicheskaya Informatsia, 2(9):12–16, 1968.</p>
+</blockquote>
+<p><br></p>
+<h3 id="2-1-Spectral-Graph-Convolutions"><a href="#2-1-Spectral-Graph-Convolutions" class="headerlink" title="2.1 Spectral Graph Convolutions"></a>2.1 Spectral Graph Convolutions</h3><p>Spectral conv on graph定义为信号 $x \in R^{N}$ (每个节点都是一个标量)与filter $g_{\theta} = diag(\theta)$ (在Fourier domain中由 $\theta \in R^{N}$ 参数化的filter)：</p>
+<script type="math/tex; mode=display">g_{\theta} \star x = U g_{\theta} U^T x \tag3</script><ul>
+<li>U：normalized graph Laplacian <em>L</em> 的<strong>特征向量矩阵</strong></li>
+<li><em>L</em> ：$L = I_N - D^{-\frac{1}{2}} A D^{-\frac{1}{2}} = U \Lambda U^T$</li>
+</ul>
+<blockquote>
+<p>注：<br><br>这里就有很多问题了。</p>
+<ol>
+<li>首先，上文说 $g_{\theta}$ 是频域中的filter，一个频域的函数与时域的x做卷积？我查的资料没这个说法。</li>
+<li>文中说U是L的特征向量矩阵，是由L得到的（具体看上面L的解释），那么可不可以说，U跟 $g_{\theta}$ 是没有运算关系的？</li>
+<li>文中说$U^T x$是对x的傅里叶变化。所以Laplacian的特征向量矩阵还能做傅里叶变换？是有种变换叫拉普拉斯变换，但是不清楚与拉普拉斯矩阵的联系。</li>
+</ol>
+</blockquote>
+<p>先把这些问题放一边，按照论文的解释， $g<em>{\theta}$ 是一个在Fourier domain的对角矩阵，而L的 $\Lambda$ 是它的一个特例。当L化成$U \Lambda U^T$的时候，由于L是时域的，所以$U^T$ 相当于是将其转为频域，$U$ 相当于将其转回时域。由于矩阵乘法满足结合律，所以论文说$U^T x$表示x的傅里叶变换，而$g</em>{\theta}$ 看作 $g_{\theta}( \Lambda )$。</p>
+<p>(3)式的计算复杂度是 $O(N^2)$ ，太昂贵了，特别是在节点很多的时候计算L的特征值特征向量。下面这篇论文建议用 <em>Chebyshev polynomials</em> 来近似计算 $g_{\theta}( \Lambda )$ ：</p>
+<blockquote>
+<p>David K. Hammond, Pierre Vandergheynst, and R ́emi Gribonval.  Wavelets on graphs via spectralgraph theory.Applied and Computational Harmonic Analysis, 30(2):129–150, 2011.</p>
+</blockquote>
+<p>那么</p>
+<script type="math/tex; mode=display">g_{\theta^{'}}( \Lambda ) \approx \sum_{k=0}^{K} {\theta}_{k}^{'} T_k({ \tilde{\Lambda} }) \tag4</script><ul>
+<li><p>$\tilde{ \Lambda } = \frac{2}{\lambda<em>{max}} \Lambda - I_N$，$\lambda</em>{max}$ 表示L最大的特征值</p>
+</li>
+<li><p>$\theta^{‘} \in R^K$ 是vector of Chebyshev coefficients</p>
+</li>
+<li><p>$T<em>k(x) = 2 x T</em>{k-1} - T_{k-2}$，$T_0(x) = 1$，$T_1(x) = x$</p>
+</li>
+</ul>
+<p><br></p>
+<p>回到(3)式</p>
+<script type="math/tex; mode=display">g_{\theta^{'}} \star x \approx \sum_{k=0}^{K} {\theta}_{k}^{'} T_k({\tilde{L}}) x \tag5</script><ul>
+<li>$\tilde{L} = \frac{2}{\lambda_{max}} L - I_N$</li>
+</ul>
+<p>需要注意的事，现在的（5）式是Laplacian的K阶多项式，是<code>K-localized</code>的了。K指的是K steps away from the central node($K^{th}$-order neighborhood)</p>
+<p>(5)式的计算复杂度是$O(|\varepsilon|)$ (linear in the number of edges)</p>
+<p><br></p>
+<p><strong>总结：</strong></p>
+<p>2.1 讲的主要是</p>
+<ul>
+<li>Spectral conv on graph的定义</li>
+<li>如何利用Chebyshev polynomials近似计算(3)式</li>
+</ul>
+<p><br></p>
+<h3 id="2-2-Layer-wise-Linear-model"><a href="#2-2-Layer-wise-Linear-model" class="headerlink" title="2.2 Layer-wise Linear model"></a>2.2 Layer-wise Linear model</h3><p>将(5)式叠加，并且“each layer followed by a point-wise non-linearity”， 就形成了基于图卷积的神经网络。现在令K=1，那么函数就变成了关于L的线性函数，即“a linear function on the graph Laplacian spectrum”。</p>
+<p>论文上直观地认为，不去明确限定Chebyshev polynomials的参数可以缓和对图上局部邻居结构的过拟合，这种图有着非常广的节点度分布。(这里省略了一部分内容)</p>
+<p><br></p>
+<p>在这种线性GCN下，近似 $\lambda_{max} \approx 2$，因为我们期望神经网络参数可以在训练中适应这种标量变化。在这种近似下，(5)式变为：</p>
+<script type="math/tex; mode=display">g_{\theta^{'}} \star x \approx \theta_{0}^{'} x + \theta_{1}^{'} (L - I_N) x = \theta_{0}^{'} x - \theta_{1}^{'} D^{-\frac{1}{2}} A D^{-\frac{1}{2}} x \tag6</script><ul>
+<li>filter的参数 $\theta<em>{0}^{‘}$ 和 $\theta</em>{1}^{‘}$ 可以在整个graph中共享</li>
+</ul>
+<p>filter以这种形式应用相当于对某个节点的$k^{th}$-order neighborhood做了高效的卷积(k是filtering operation的数量，或者是神经网络模型conv层的数量)</p>
+<p><br></p>
+<p>在实践中，<strong>限制参数</strong> 的数量可以解决过拟合，并且最小化operation的数量，所以再如下进行简化：</p>
+<script type="math/tex; mode=display">g_{\theta^{'}} \star x \approx \theta (I_N + D^{-\frac{1}{2}} A D^{-\frac{1}{2}}) x \tag7</script><ul>
+<li>$\theta = \theta<em>{0}^{‘} = - \theta</em>{1}^{‘}$</li>
+</ul>
+<p>问题是，重复这个operator会导致数值不稳定和梯度爆炸/消失，因此再用一个renormalization trick：$I<em>N + D^{-\frac{1}{2}} A D^{-\frac{1}{2}} \to \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}}$，即令$\tilde{A} = A + I_N$，$\tilde{D}</em>{ii} = \sum<em>j \tilde{A}</em>{ij}$</p>
+<p>之前说X是N×1的，我们可以一般化，使$X \in \mathbb{R}^{N \times C}$，C是input channels。于是(7)式化为：</p>
+<script type="math/tex; mode=display">Z = \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} X \Theta \tag8</script><ul>
+<li>$\Theta \in \mathbb{R}^{C \times F}$：filter的参数矩阵</li>
+<li>$Z \in \mathbb{R}^{N \times F}$：X卷积后的信号矩阵</li>
+<li>复杂度：$O(| \varepsilon | FC)$，因为$\tilde{A} X$可以实现为sparse matrix与dense matrix的product。</li>
+</ul>
+<p><br></p>
+<h2 id="3-Semi-Supervised-Node-Classification"><a href="#3-Semi-Supervised-Node-Classification" class="headerlink" title="3 Semi-Supervised Node Classification"></a>3 Semi-Supervised Node Classification</h2><h3 id="3-1-Example"><a href="#3-1-Example" class="headerlink" title="3.1 Example"></a>3.1 Example</h3><p>这里，定义两层GCN做图的半监督节点分类，先计算$\hat{A} = \tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}}$，然后有</p>
+<script type="math/tex; mode=display">Z = f(X, A) = softmax(\hat{A} ReLU(\hat{A} X W^{0})W^{(1)}) \tag9</script><ul>
+<li><p>$softmax(x_i) = \frac{1}{sum} exp(x_i)，sum = \sum_i exp(x_i)$。注，softmax是row-wise的</p>
+</li>
+<li><p>$W^{0}，W^{(1)}$ 是通过gradient descent训练得到的，这里用的是batch gradient descent，每次training迭代用的都是整个数据集(需要将dataset放在内存)。</p>
+</li>
+<li>Stochasticity in the training process is introduced viadropout (Srivastava et al., 2014).  We leave memory-efficient extensions with mini-batch stochasticgradient descent for future work.</li>
+</ul>
+<p><strong>Loss function</strong></p>
+<p>采用cross-entropy</p>
+<script type="math/tex; mode=display">L = - \sum_{l \in y_L} \sum_{f =1}^{F} Y_{lf} lnZ_{lf} \tag{10}</script><ul>
+<li>$y_L$：有label的节点集</li>
+</ul>
+<p><br></p>
+<h3 id="3-2-Implementation"><a href="#3-2-Implementation" class="headerlink" title="3.2 Implementation"></a>3.2 Implementation</h3><p>在实践中，用Tensorflow来高效地使用GPU计算(Mart ́ın Abadi et al. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015.)，(9)式使用sparse-dense matrix multiplications，复杂度$O(| \varepsilon | CHF)$</p>
+<p><br></p>
+<h2 id="7-Discussion"><a href="#7-Discussion" class="headerlink" title="7 Discussion"></a>7 Discussion</h2><h3 id="7-1-Semi-Supervised-Model"><a href="#7-1-Semi-Supervised-Model" class="headerlink" title="7.1 Semi-Supervised Model"></a>7.1 Semi-Supervised Model</h3><p>我们的方法好！很好！非常好！</p>
+<p>基于graph-Laplacian regularization的方法很大可能会因为它的假设——边只编码节点的相似性。另一方面，基于Skip-gram的方法会因为它们是基于难以优化的“multi-step pipeline”而受限。</p>
+<p>我们的renormalized propagation model(8式)效果很好！</p>
+<h3 id="7-2-Limitations-And-Future-work"><a href="#7-2-Limitations-And-Future-work" class="headerlink" title="7.2 Limitations And Future work"></a>7.2 Limitations And Future work</h3><ul>
+<li>对内存要求比较高</li>
+<li>我们的框架并不天然地支持有向图和边的特征</li>
+<li>我们假设self-connection与edges to neighboring nodes的重要性是一样的。对于某些数据集，<script type="math/tex">\tilde{A} = A + \lambda I_N \tag{11}</script> 会更好。其中 $\lambda$ 可以学习得到。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL-ML/" rel="tag"># DL&ML</a>
+          
+            <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
+          
+            <a href="/tags/GCN/" rel="tag"># GCN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/linux/VMware相关/" rel="next" title="Linux下VMware安装教程">
+                <i class="fa fa-chevron-left"></i> Linux下VMware安装教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/linux/SSqt5+SwitchyOmega/" rel="prev" title="Linux下Shadowsocks+SwitchOmega">
+                Linux下Shadowsocks+SwitchOmega <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Junyan Wu" />
+            
+              <p class="site-author-name" itemprop="name">Junyan Wu</p>
+              <p class="site-description motion-element" itemprop="description">记录日常以及学习路程</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/junyanwu" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/zhi-xing-32/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Fast-Approximate-Convolutions-On-Graphs"><span class="nav-number">1.</span> <span class="nav-text">2 Fast Approximate Convolutions On Graphs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Spectral-Graph-Convolutions"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Spectral Graph Convolutions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Layer-wise-Linear-model"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 Layer-wise Linear model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Semi-Supervised-Node-Classification"><span class="nav-number">2.</span> <span class="nav-text">3 Semi-Supervised Node Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Example"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 Example</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Implementation"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 Implementation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Discussion"><span class="nav-number">3.</span> <span class="nav-text">7 Discussion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-Semi-Supervised-Model"><span class="nav-number">3.1.</span> <span class="nav-text">7.1 Semi-Supervised Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-Limitations-And-Future-work"><span class="nav-number">3.2.</span> <span class="nav-text">7.2 Limitations And Future work</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Junyan Wu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://sigma5.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/';
+          this.page.identifier = '2017/12/21/deeplearning/paper/Semi_Supervised_Classification_With_Graph_Conv_Networks/';
+          this.page.title = 'SEMI-SUPERVISED CLASSIFICATION WITH GRAPH CONVOLUTIONAL NETWORKS';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://sigma5.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("0GLOtY48751iDBdReFqXp3D5-gzGzoHsz", "ai77SrHt0g7eEMHam94XqNnP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
