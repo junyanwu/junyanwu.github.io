@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/images/capsule_ex3.jpg">
 <meta property="og:image" content="http://yoursite.com/images/capsule_multiMNIST.png">
 <meta property="og:image" content="http://yoursite.com/images/capsule_diff.png">
-<meta property="og:updated_time" content="2017-12-23T12:57:40.402Z">
+<meta property="og:updated_time" content="2017-12-23T13:00:24.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dynamic Routing Between Capsules论文阅读">
 <meta name="twitter:description" content="Intro本文记录了阅读论文《Dynamic Routing Between Capsules》以及naturomics的代码的理解与收获，若有错误欢迎指出（wjy.f@qq.com），转载请注明出处。 若想通过视频快速了解，可以看看下面两个链接，讲得比较生动易理解（不过还是推荐读论文）：  Capsule Networks教程(by Aurélie) 用Tensorflow实现Capsule(b">
@@ -386,14 +386,14 @@
       
 
       
-        <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>本文记录了阅读论文<a href="https://arxiv.org/pdf/1710.09829" target="_blank" rel="noopener">《<em>Dynamic Routing Between Capsules</em>》</a>以及<a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">naturomics的代码</a>的理解与收获，若有错误欢迎指出（wjy.f@qq.com），转载请注明出处。</p>
+        <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>本文记录了阅读论文<a href="https://arxiv.org/pdf/1710.09829" target="_blank" rel="noopener">《<em>Dynamic Routing Between Capsules</em>》</a>以及<a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">naturomics的代码</a>的理解与收获，若有错误欢迎指出（wjy.f@qq.com），转载请注明出处。</p>
 <p>若想通过视频快速了解，可以看看下面两个链接，讲得比较生动易理解（不过还是推荐读论文）：</p>
 <ul>
 <li><a href="https://www.bilibili.com/video/av16594836/?from=search&amp;seid=12945685157419672339" target="_blank" rel="noopener">Capsule Networks教程(by Aurélie)</a></li>
 <li><a href="https://www.bilibili.com/video/av16820289/" target="_blank" rel="noopener">用Tensorflow实现Capsule(by Aurélie)</a></li>
 </ul>
 <p><br></p>
-<h2 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h2><h3 id="CapsNet"><a href="#CapsNet" class="headerlink" title="CapsNet"></a>CapsNet</h3><h4 id="结构概述"><a href="#结构概述" class="headerlink" title="结构概述"></a>结构概述</h4><p>论文仅仅是提出了一个可行的方案，目的是为了证明<code>Capsule</code>这个思想的可行性，目前还较为粗略，有很多改进空间。论文有两个比较突出的创新点：</p>
+<h1 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h1><h2 id="CapsNet"><a href="#CapsNet" class="headerlink" title="CapsNet"></a>CapsNet</h2><h3 id="结构概述"><a href="#结构概述" class="headerlink" title="结构概述"></a>结构概述</h3><p>论文仅仅是提出了一个可行的方案，目的是为了证明<code>Capsule</code>这个思想的可行性，目前还较为粗略，有很多改进空间。论文有两个比较突出的创新点：</p>
 <ul>
 <li>采用 routing-by-agreement mechainsm 决定两层capsule之间的连接以及参数$c_{ij}$的更新方式</li>
 <li>用向量输出替代标量输出</li>
@@ -404,7 +404,7 @@
 <p>看到这里，何为<code>Capsule</code>？在PrimaryCaps中，它指的是长度为8的向量，共6<em>6</em>32个。而在DigitCaps中，它指的是16维的向量，共10个。所以Capsule其实对应着传统神经网络的scalar，只是一个scalar能够表征的信息太少了，所以将其扩展为向量，这样它就能够表示更多的信息。有人说，之所以提出这种想法是因为Hinton观察到人的大脑不是像神经网络一样严格分层，而是一簇簇神经元作为一个整体的。</p>
 <p>CapsNet的结构是Image(input)-&gt;Conv1-&gt;PrimaryCaps-&gt;DigitCaps(output)-&gt;Reconstruction，下文也会按照这个顺序来讲解</p>
 <p>在下文中，若 i 指 $layer_l$ 的某一个capsule ，那么 j 就是指 $layer_{l+1}$ 的某一个capsule。</p>
-<h4 id="image-to-ReLU-Conv1-to-PrimaryCaps"><a href="#image-to-ReLU-Conv1-to-PrimaryCaps" class="headerlink" title="image to ReLU Conv1 to PrimaryCaps"></a>image to ReLU Conv1 to PrimaryCaps</h4><p>论文使用的是MNIST手写识别数据集，每张图片的大小都是28*28。</p>
+<h3 id="image-to-ReLU-Conv1-to-PrimaryCaps"><a href="#image-to-ReLU-Conv1-to-PrimaryCaps" class="headerlink" title="image to ReLU Conv1 to PrimaryCaps"></a>image to ReLU Conv1 to PrimaryCaps</h3><p>论文使用的是MNIST手写识别数据集，每张图片的大小都是28*28。</p>
 <p>流程：</p>
 <ol>
 <li><p>image(28 * 28)</p>
@@ -415,7 +415,7 @@
 </li>
 </ol>
 <p>这里可能会有人奇怪，这里不过是用了256个filter产生256个feature map，图片为什么会画成(32 <em> 8 </em> 6 * 6)的形式，这是因为后面的路由算法是将一个长度为8的向量当做一个整体来计算的。</p>
-<h4 id="PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><a href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing" class="headerlink" title="PrimaryCaps to DigitCaps &amp; Dynamic Routing"></a>PrimaryCaps to DigitCaps &amp; Dynamic Routing</h4><ul>
+<h3 id="PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><a href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing" class="headerlink" title="PrimaryCaps to DigitCaps &amp; Dynamic Routing"></a>PrimaryCaps to DigitCaps &amp; Dynamic Routing</h3><ul>
 <li>下面讲解从PrimaryCaps $\to$ DigitCaps的计算过程，其中主要应用了<em>Routing-By-Agreement Mechanism</em></li>
 </ul>
 <p><strong>一张图表示他们之间的关系：</strong></p>
@@ -437,12 +437,12 @@
 <li>$squash()$： 非线性函数，保留了向量的方向，使长的向量越长，短的向量越短，并且长度都压缩在0-1之内</li>
 <li>$v_j$： 由dynamic routing计算出来的PrimaryCaps的output。在文章中就是指最后的输出DigitCaps，共有10个（因为有10个数字，即10类）Capsule。每个capsule有16维，每一维都代表着数字的某些属性（粗细、倾斜程度等等）。<strong>向量的长度代表了当前输入是类 $j$ 的概率</strong>。</li>
 </ul>
-<h4 id="Dynamic-Routing算法流程"><a href="#Dynamic-Routing算法流程" class="headerlink" title="Dynamic Routing算法流程"></a>Dynamic Routing算法流程</h4><p><img src="/images/procedure1.png" alt=""></p>
+<h3 id="Dynamic-Routing算法流程"><a href="#Dynamic-Routing算法流程" class="headerlink" title="Dynamic Routing算法流程"></a>Dynamic Routing算法流程</h3><p><img src="/images/procedure1.png" alt=""></p>
 <p>整个过程如下所示（图片来自<a href="https://github.com/naturomics/" target="_blank" rel="noopener">naturomics</a>的ppt）：</p>
 <p><img src="/images/capsule_routingbyagreement.png" alt=""></p>
-<h4 id="Reconstruction"><a href="#Reconstruction" class="headerlink" title="Reconstruction"></a>Reconstruction</h4><p>CapsNet使用Reconstruction作为Regularization。其做法是将DigitCaps的十个输出向量$v_j$中长度最长的向量，经过3个FC层（结构如下图所示）重构出原来的图像，通过对比重构的图像和原图像的差异(pixel-wise)，得到reconstruction loss。用来重构的这三个FC层一起称为<code>Decoder</code>。</p>
+<h3 id="Reconstruction"><a href="#Reconstruction" class="headerlink" title="Reconstruction"></a>Reconstruction</h3><p>CapsNet使用Reconstruction作为Regularization。其做法是将DigitCaps的十个输出向量$v_j$中长度最长的向量，经过3个FC层（结构如下图所示）重构出原来的图像，通过对比重构的图像和原图像的差异(pixel-wise)，得到reconstruction loss。用来重构的这三个FC层一起称为<code>Decoder</code>。</p>
 <p><img src="/images/capsule_decoder.png" alt=""></p>
-<h4 id="Total-loss"><a href="#Total-loss" class="headerlink" title="Total loss"></a>Total loss</h4><p>由于有多个类的存在，所以不能用cross entropy，论文中使用了SVM中常用的损失函数Margin loss来代替</p>
+<h3 id="Total-loss"><a href="#Total-loss" class="headerlink" title="Total loss"></a>Total loss</h3><p>由于有多个类的存在，所以不能用cross entropy，论文中使用了SVM中常用的损失函数Margin loss来代替</p>
 <p><strong>Margin loss</strong></p>
 <p><img src="/images/cap_lossfunc.png" alt=""></p>
 <ul>
@@ -464,7 +464,7 @@
 <p>即</p>
 <script type="math/tex; mode=display">Reconstruction Loss=\frac{1}{784} * \sum_{i=1}^{784}(decoded_i - orgin_i)^2</script><p>最后：</p>
 <script type="math/tex; mode=display">TotalLoss = MarginLoss + ReconstructionLoss</script><p><br></p>
-<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p><strong>MNIST</strong></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><strong>MNIST</strong></p>
 <p>l=label, p=prediction, r=reconstruction。下面最右的两列展示了模式是如何在5和3之间纠结的。而其它列表明了模型不仅保留了图片的细节并且平滑了噪声。</p>
 <p><img src="/images/capsule_ex2.jpg" alt=""></p>
 <p><img src="/images/capsule_ex1.jpg" alt=""></p>
@@ -478,10 +478,10 @@
 <p>最右R:P:(2, 7)指的是预测结果是2,7，然后将代表2和7的capsule重构。</p>
 <p><img src="/images/capsule_multiMNIST.png" alt=""></p>
 <p><br></p>
-<h3 id="CapsNet与tradictional-neuron的对比"><a href="#CapsNet与tradictional-neuron的对比" class="headerlink" title="CapsNet与tradictional neuron的对比"></a>CapsNet与tradictional neuron的对比</h3><p>（图片来自<a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">naturomics</a>）：</p>
+<h2 id="CapsNet与tradictional-neuron的对比"><a href="#CapsNet与tradictional-neuron的对比" class="headerlink" title="CapsNet与tradictional neuron的对比"></a>CapsNet与tradictional neuron的对比</h2><p>（图片来自<a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">naturomics</a>）：</p>
 <p><img src="/images/capsule_diff.png" alt=""></p>
 <p><br></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>为什么要用Routing-by-agreement？</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>为什么要用Routing-by-agreement？</strong></p>
 <p>传统的CNN里面，conv后面是max-pooling层，但是max-pooling只保留了唯一一个最活跃的特征，而Routing则有效得多。</p>
 <p>Routing-by-agreement有以下几个好处：</p>
 <ul>
@@ -493,7 +493,7 @@
 <p>the capsules in the first layer try to predict what the second layer capsules will output</p>
 </blockquote>
 <p><br></p>
-<h3 id="代码阅读"><a href="#代码阅读" class="headerlink" title="代码阅读"></a>代码阅读</h3><p><a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">代码link</a></p>
+<h2 id="代码阅读"><a href="#代码阅读" class="headerlink" title="代码阅读"></a>代码阅读</h2><p><a href="https://github.com/naturomics/CapsNet-Tensorflow" target="_blank" rel="noopener">代码link</a></p>
 <p>由于代码基本上都是按照文章思路来写的，所以不重复讲，而是介绍主要的结构。</p>
 <p><strong>目录</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">CapsNet-Tensorflow</span><br><span class="line">  - capsLayer.py</span><br><span class="line">      定义了capsLayer的实现方法。</span><br><span class="line">      由于论文中提及的capsLayer有两种:</span><br><span class="line">        PrimaryCaps(without routing)</span><br><span class="line">        DigitCaps(with routing)</span><br><span class="line">      所以该文件里面也包含了这两种Layer的实现方式</span><br><span class="line">      另外，该文件还有:</span><br><span class="line">        routing</span><br><span class="line">        squash</span><br><span class="line"></span><br><span class="line">  - capsNet.py</span><br><span class="line">      定义了CapsNet类</span><br><span class="line">      包含：</span><br><span class="line">        build_arch()  # 定义结构</span><br><span class="line">        loss()        # 定义loss</span><br><span class="line"></span><br><span class="line">  - config.py</span><br><span class="line">      超参数设定</span><br><span class="line"></span><br><span class="line">  - main.py</span><br><span class="line">      程序入口</span><br><span class="line"></span><br><span class="line">  - utils.py</span><br><span class="line">      用于读取MNIST的数据</span><br></pre></td></tr></table></figure>
@@ -715,7 +715,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main"><span class="nav-number">2.</span> <span class="nav-text">Main</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CapsNet"><span class="nav-number">2.1.</span> <span class="nav-text">CapsNet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结构概述"><span class="nav-number">2.1.1.</span> <span class="nav-text">结构概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#image-to-ReLU-Conv1-to-PrimaryCaps"><span class="nav-number">2.1.2.</span> <span class="nav-text">image to ReLU Conv1 to PrimaryCaps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><span class="nav-number">2.1.3.</span> <span class="nav-text">PrimaryCaps to DigitCaps &amp; Dynamic Routing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dynamic-Routing算法流程"><span class="nav-number">2.1.4.</span> <span class="nav-text">Dynamic Routing算法流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reconstruction"><span class="nav-number">2.1.5.</span> <span class="nav-text">Reconstruction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Total-loss"><span class="nav-number">2.1.6.</span> <span class="nav-text">Total loss</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验"><span class="nav-number">2.2.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CapsNet与tradictional-neuron的对比"><span class="nav-number">2.3.</span> <span class="nav-text">CapsNet与tradictional neuron的对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码阅读"><span class="nav-number">2.5.</span> <span class="nav-text">代码阅读</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Main"><span class="nav-number">2.</span> <span class="nav-text">Main</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CapsNet"><span class="nav-number">2.1.</span> <span class="nav-text">CapsNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构概述"><span class="nav-number">2.1.1.</span> <span class="nav-text">结构概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-to-ReLU-Conv1-to-PrimaryCaps"><span class="nav-number">2.1.2.</span> <span class="nav-text">image to ReLU Conv1 to PrimaryCaps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><span class="nav-number">2.1.3.</span> <span class="nav-text">PrimaryCaps to DigitCaps &amp; Dynamic Routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic-Routing算法流程"><span class="nav-number">2.1.4.</span> <span class="nav-text">Dynamic Routing算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reconstruction"><span class="nav-number">2.1.5.</span> <span class="nav-text">Reconstruction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Total-loss"><span class="nav-number">2.1.6.</span> <span class="nav-text">Total loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">2.2.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CapsNet与tradictional-neuron的对比"><span class="nav-number">2.3.</span> <span class="nav-text">CapsNet与tradictional neuron的对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码阅读"><span class="nav-number">2.5.</span> <span class="nav-text">代码阅读</span></a></li></ol></li></ol></div>
             
 
           </div>
