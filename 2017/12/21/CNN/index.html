@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DL&ML,CNN,离散的笔记," />
 
 
 
@@ -79,16 +79,23 @@
 
 
 
-<meta name="description" content="记录日常以及学习路程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SIGMA&#39;s BLOG">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="卷积操作$$O = \frac{W-K+2P}{S}+1$$ $O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride stride = 1  stride = 2  Padding padding的计算公式与conv一样 zero padding  $$Zero Padding = \frac{(K-1)}{2}$$ 有这些情况会使">
+<meta name="keywords" content="DL&amp;ML,CNN,离散的笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Convolutional Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2017/12/21/CNN/index.html">
 <meta property="og:site_name" content="SIGMA&#39;s BLOG">
-<meta property="og:description" content="记录日常以及学习路程">
+<meta property="og:description" content="卷积操作$$O = \frac{W-K+2P}{S}+1$$ $O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride stride = 1  stride = 2  Padding padding的计算公式与conv一样 zero padding  $$Zero Padding = \frac{(K-1)}{2}$$ 有这些情况会使">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-c4a7b49deda73e2b26232d12db7e77c6_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-16ad975f95ef7a45ab836fa563e73736_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-a944f0f847266c28ad93f2b6b9986e65_b.png">
+<meta property="og:updated_time" content="2017-12-23T03:02:09.525Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SIGMA&#39;s BLOG">
-<meta name="twitter:description" content="记录日常以及学习路程">
+<meta name="twitter:title" content="Convolutional Neural Networks">
+<meta name="twitter:description" content="卷积操作$$O = \frac{W-K+2P}{S}+1$$ $O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride stride = 1  stride = 2  Padding padding的计算公式与conv一样 zero padding  $$Zero Padding = \frac{(K-1)}{2}$$ 有这些情况会使">
+<meta name="twitter:image" content="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/21/CNN/"/>
 
 
 
 
 
-  <title>归档 | SIGMA's BLOG</title>
+  <title>Convolutional Neural Networks | SIGMA's BLOG</title>
   
 
 
@@ -153,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,411 +254,236 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/CNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junyan Wu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SIGMA's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Convolutional Neural Networks</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T11:05:23+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 16 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/21/CNN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/21/CNN/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/12/21/CNN/" class="leancloud_visitors" data-flag-title="Convolutional Neural Networks">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/23/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-23T11:42:17+08:00"
-              content="2017-12-23" >
-          12-23
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/pooling/" itemprop="url">
-              
-                <span itemprop="name">Theano_Pooling_参数ignore_border的解释</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/Dynamic_Routing_Between_Capsules阅读笔记/" itemprop="url">
-              
-                <span itemprop="name">Dynamic Routing Between Capsules论文阅读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/CNN/" itemprop="url">
-              
-                <span itemprop="name">Convolutional Neural Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="卷积操作"><a href="#卷积操作" class="headerlink" title="卷积操作"></a><em>卷积操作</em></h3><p>$$O = \frac{W-K+2P}{S}+1$$</p>
+<p>$O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride</p>
+<p><em>stride = 1</em></p>
+<p><img src="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png" alt=""></p>
+<p><em>stride = 2</em></p>
+<p><img src="https://pic3.zhimg.com/v2-c4a7b49deda73e2b26232d12db7e77c6_b.png" alt=""></p>
+<h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a><em>Padding</em></h3><ul>
+<li>padding的计算公式与conv一样</li>
+<li>zero padding</li>
+</ul>
+<p>$$Zero Padding = \frac{(K-1)}{2}$$</p>
+<p>有这些情况会使用zero padding</p>
+<ul>
+<li>卷积后image尺寸很小，但我们又想使用conv</li>
+<li>由于image尺寸跟filter尺寸的原因</li>
+</ul>
+<p><img src="https://pic3.zhimg.com/v2-16ad975f95ef7a45ab836fa563e73736_b.png" alt=""></p>
+<h3 id="pooling"><a href="#pooling" class="headerlink" title="pooling"></a><em>pooling</em></h3><p>也叫downsampling（下采样）层，最常用的是max-pooling</p>
+<p><em>stride = 2</em></p>
+<p><img src="https://pic2.zhimg.com/v2-a944f0f847266c28ad93f2b6b9986e65_b.png" alt=""></p>
+<h3 id="ReLu"><a href="#ReLu" class="headerlink" title="ReLu"></a><em>ReLu</em></h3><p>优点：</p>
+<ul>
+<li>因为它在准确度不发生明显改变的情况下能把训练速度提高很多</li>
+<li>能够减轻vanishing gradient problem<br>–指梯度以指数方式在层中消失，导致网络较底层的训练速度非常慢</li>
+<li>把negative activation变为0，增加了模型的非线性特征，而且不影响感受域</li>
+</ul>
+<p>参见 Geoffrey Hinton（即深度学习之父）的论文：Rectified Linear Units Improve Restricted Boltzmann Machines</p>
+<h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a><em>Dropout</em></h3><p>随机丢弃神经元，简单来说，就是在训练过程中在Dropout层设置一个随机的激活参数集，在forward pass中将这些激活参数集设置为0。</p>
+<p>理解了大概，这部分细节需要详细看看</p>
+<blockquote>
+<p>参考资料<br><a href="https://www.zhihu.com/question/52668301" target="_blank" rel="noopener">https://www.zhihu.com/question/52668301</a></p>
+</blockquote>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/convolutional_mlp/" itemprop="url">
-              
-                <span itemprop="name">LeNet代码走读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/CV_mask/" itemprop="url">
-              
-                <span itemprop="name">Mask的概念解读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/conv/" itemprop="url">
-              
-                <span itemprop="name">CNN的theano实现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/FCN/" itemprop="url">
-              
-                <span itemprop="name">Fully Convolutional Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/GCRN/" itemprop="url">
-              
-                <span itemprop="name">GCRN代码解读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/21/Huber_loss/" itemprop="url">
-              
-                <span itemprop="name">Huber loss</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-21T11:05:23+08:00"
-              content="2017-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL-ML/" rel="tag"># DL&ML</a>
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+            <a href="/tags/离散的笔记/" rel="tag"># 离散的笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/convolutional_mlp/" rel="next" title="LeNet代码走读">
+                <i class="fa fa-chevron-left"></i> LeNet代码走读
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/Dynamic_Routing_Between_Capsules阅读笔记/" rel="prev" title="Dynamic Routing Between Capsules论文阅读">
+                Dynamic Routing Between Capsules论文阅读 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +491,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -679,8 +525,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -760,6 +615,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积操作"><span class="nav-number">1.</span> <span class="nav-text">卷积操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Padding"><span class="nav-number">2.</span> <span class="nav-text">Padding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pooling"><span class="nav-number">3.</span> <span class="nav-text">pooling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReLu"><span class="nav-number">4.</span> <span class="nav-text">ReLu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropout"><span class="nav-number">5.</span> <span class="nav-text">Dropout</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -893,6 +764,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -910,6 +785,18 @@
       <script id="dsq-count-scr" src="https://sigma5.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/12/21/CNN/';
+          this.page.identifier = '2017/12/21/CNN/';
+          this.page.title = 'Convolutional Neural Networks';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://sigma5.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   

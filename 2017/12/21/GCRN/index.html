@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="paper,gcn," />
+  <meta name="keywords" content="Paper Reading,GCN,GCRN,DL&ML,Code," />
 
 
 
@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="论文及源代码：点击这里  由于涉及比较多的公式，而github不支持MathJax或者LaTeX，所以如果想获得更好的阅读体验请安装chrome插件GitHub with MathJax，或者有更好的方法恳请告知。 若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCR">
-<meta name="keywords" content="paper,gcn">
+<meta name="description" content="论文及源代码：点击这里  若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCRN是一个将GCN和RNN结合起来使用的模型，能处理具有空间和时序的数据。 源代码的目录结构： 1234567891011gconvRNN  - datasets    - ptb.char.t">
+<meta name="keywords" content="Paper Reading,GCN,GCRN,DL&amp;ML,Code">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GCRN代码解读">
 <meta property="og:url" content="http://yoursite.com/2017/12/21/GCRN/index.html">
 <meta property="og:site_name" content="SIGMA&#39;s BLOG">
-<meta property="og:description" content="论文及源代码：点击这里  由于涉及比较多的公式，而github不支持MathJax或者LaTeX，所以如果想获得更好的阅读体验请安装chrome插件GitHub with MathJax，或者有更好的方法恳请告知。 若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCR">
+<meta property="og:description" content="论文及源代码：点击这里  若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCRN是一个将GCN和RNN结合起来使用的模型，能处理具有空间和时序的数据。 源代码的目录结构： 1234567891011gconvRNN  - datasets    - ptb.char.t">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/adj.png">
 <meta property="og:image" content="http://yoursite.com/images/adj_value.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="http://yoursite.com/images/gcn_lstm.png">
 <meta property="og:image" content="http://yoursite.com/images/dataflow.png">
 <meta property="og:image" content="http://yoursite.com/images/laplacian_example.png">
-<meta property="og:updated_time" content="2017-12-23T02:07:34.215Z">
+<meta property="og:updated_time" content="2017-12-23T03:03:34.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCRN代码解读">
-<meta name="twitter:description" content="论文及源代码：点击这里  由于涉及比较多的公式，而github不支持MathJax或者LaTeX，所以如果想获得更好的阅读体验请安装chrome插件GitHub with MathJax，或者有更好的方法恳请告知。 若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCR">
+<meta name="twitter:description" content="论文及源代码：点击这里  若发现存在错误，欢迎指正。 GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCRN是一个将GCN和RNN结合起来使用的模型，能处理具有空间和时序的数据。 源代码的目录结构： 1234567891011gconvRNN  - datasets    - ptb.char.t">
 <meta name="twitter:image" content="http://yoursite.com/images/adj.png">
 
 
@@ -219,6 +219,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -301,6 +311,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -350,11 +382,9 @@
       
 
       
-        
-<ul>
+        <ul>
 <li>论文及源代码：<a href="https://github.com/youngjoo-epfl/gconvRNN" target="_blank" rel="noopener">点击这里</a></li>
 </ul>
-<p>由于涉及比较多的公式，而github不支持MathJax或者LaTeX，所以如果想获得更好的阅读体验请安装chrome插件<a href="https://chrome.google.com/webstore/detail/github-with-mathjax/ioemnmodlmafdkllaclgeombjnmnbima" target="_blank" rel="noopener">GitHub with MathJax</a>，或者有更好的方法恳请告知。</p>
 <p>若发现存在错误，欢迎指正。</p>
 <p>GCN，是基于Spectral Graph Theory所研究出来的一种方法，它主要的好处是利用了SGT里面一些已有的结论和方法，来得到图的性质。GCRN是一个将GCN和RNN结合起来使用的模型，能处理具有空间和时序的数据。</p>
 <p>源代码的目录结构：</p>
@@ -495,9 +525,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/paper/" rel="tag"># paper</a>
+            <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
           
-            <a href="/tags/gcn/" rel="tag"># gcn</a>
+            <a href="/tags/GCN/" rel="tag"># GCN</a>
+          
+            <a href="/tags/GCRN/" rel="tag"># GCRN</a>
+          
+            <a href="/tags/DL-ML/" rel="tag"># DL&ML</a>
+          
+            <a href="/tags/Code/" rel="tag"># Code</a>
           
         </div>
       
@@ -510,14 +546,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/12/21/Huber_loss/" rel="next" title="Huber loss">
+                <i class="fa fa-chevron-left"></i> Huber loss
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/22/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/21/FCN/" rel="prev" title="Fully Convolutional Networks">
+                Fully Convolutional Networks <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -615,12 +655,21 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
             
 
             
@@ -628,7 +677,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
