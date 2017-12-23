@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/images/capsule_ex3.jpg">
 <meta property="og:image" content="http://yoursite.com/images/capsule_multiMNIST.png">
 <meta property="og:image" content="http://yoursite.com/images/capsule_diff.png">
-<meta property="og:updated_time" content="2017-12-23T04:57:20.509Z">
+<meta property="og:updated_time" content="2017-12-23T12:57:40.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dynamic Routing Between Capsules论文阅读">
 <meta name="twitter:description" content="Intro本文记录了阅读论文《Dynamic Routing Between Capsules》以及naturomics的代码的理解与收获，若有错误欢迎指出（wjy.f@qq.com），转载请注明出处。 若想通过视频快速了解，可以看看下面两个链接，讲得比较生动易理解（不过还是推荐读论文）：  Capsule Networks教程(by Aurélie) 用Tensorflow实现Capsule(b">
@@ -403,8 +403,7 @@
 <p>看完这幅图应该大概能理解CapsNet的结构。它先是对图像用了两次卷积得到PrimaryCaps，然后用<em>Routing-By-Agreement Mechanism</em>得到DigitCaps。最后，求DigitCaps中的10个向量的长度，比如说最长的是第4个向量，那么就意味着CapsNet识别出当前输入的图片是数字4。</p>
 <p>看到这里，何为<code>Capsule</code>？在PrimaryCaps中，它指的是长度为8的向量，共6<em>6</em>32个。而在DigitCaps中，它指的是16维的向量，共10个。所以Capsule其实对应着传统神经网络的scalar，只是一个scalar能够表征的信息太少了，所以将其扩展为向量，这样它就能够表示更多的信息。有人说，之所以提出这种想法是因为Hinton观察到人的大脑不是像神经网络一样严格分层，而是一簇簇神经元作为一个整体的。</p>
 <p>CapsNet的结构是Image(input)-&gt;Conv1-&gt;PrimaryCaps-&gt;DigitCaps(output)-&gt;Reconstruction，下文也会按照这个顺序来讲解</p>
-<p>在下文中，若 i 指 $layer<em>l$ 的某一个capsule ，那么 j 就是指 $layer</em>{l+1}$ 的某一个capsule。</p>
-<p><br></p>
+<p>在下文中，若 i 指 $layer_l$ 的某一个capsule ，那么 j 就是指 $layer_{l+1}$ 的某一个capsule。</p>
 <h4 id="image-to-ReLU-Conv1-to-PrimaryCaps"><a href="#image-to-ReLU-Conv1-to-PrimaryCaps" class="headerlink" title="image to ReLU Conv1 to PrimaryCaps"></a>image to ReLU Conv1 to PrimaryCaps</h4><p>论文使用的是MNIST手写识别数据集，每张图片的大小都是28*28。</p>
 <p>流程：</p>
 <ol>
@@ -416,22 +415,20 @@
 </li>
 </ol>
 <p>这里可能会有人奇怪，这里不过是用了256个filter产生256个feature map，图片为什么会画成(32 <em> 8 </em> 6 * 6)的形式，这是因为后面的路由算法是将一个长度为8的向量当做一个整体来计算的。</p>
-<p><br></p>
 <h4 id="PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><a href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing" class="headerlink" title="PrimaryCaps to DigitCaps &amp; Dynamic Routing"></a>PrimaryCaps to DigitCaps &amp; Dynamic Routing</h4><ul>
 <li>下面讲解从PrimaryCaps $\to$ DigitCaps的计算过程，其中主要应用了<em>Routing-By-Agreement Mechanism</em></li>
 </ul>
 <p><strong>一张图表示他们之间的关系：</strong></p>
-<p><br></p>
 <p><img src="/images/capsule_routing.png" alt=""></p>
 <p>注意，图片中仅展示了一个$v_j,j\in(1,10)$的求解过程，其他$v_j$同理可得。</p>
 <p><strong>公式</strong></p>
 <script type="math/tex; mode=display">\hat{u}_{j|i} = W_{ij} u_i \tag{1}</script><ul>
-<li>$u_i (i \in [6 <em> 6 </em> 32])$： 表示PrimaryCaps的某个8D的Capsule</li>
+<li>$u_i(i \in [6 × 6 × 32])$： 表示PrimaryCaps的某个8D的Capsule</li>
 <li>$\hat{u}_{j|i}$： 论文中称之为低一层的capsules的“prediction vectors”</li>
 </ul>
-<script type="math/tex; mode=display">c_{ij} = \frac{exp( b_{ij} )}{\sum_{k} exp( b_{ik} )} \tag{2}</script><ul>
-<li>$b<em>{ij}$： 初始化为0，更新方法是 $b</em>{ij} \leftarrow b<em>{ij} + \hat{u}</em>{j|i} v<em>j$。 其中 $a</em>{ij} = \hat{u}<em>{j|i} v_j$ 表示 $capsule_j$（即 $v_j$ ）跟 $capsule_i$的prediction vector（即 $\hat{u}</em>{j|i}$ ）的agreement（契合度）。<strong>值越大，表示两个向量的方向越相似，两个向量所表示的性质越相近</strong>。由 $c<em>{ij}$ 的公式知，$b</em>{ij}$ 的值越大（意味着两个向量的方向越相似），$c_{ij}$ 的值越大，<strong>$capsule_i$ 越倾向于将信息传送给 $capsule_j$</strong> 。</li>
-<li>$c<em>{ij}$： 由动态路由算法更新的coupling coefficients，并且 $\sum</em>{i} c_{ij} = 1$（此时 $j$ 为某确定的常数）</li>
+<script type="math/tex; mode=display">c\_{ij} = \frac{exp(b_{ij})}{\sum_{k}exp(b_{ik})} \tag{2}</script><ul>
+<li>$b_{ij}$： 初始化为0，更新方法是 $b_{ij} \leftarrow b_{ij} + \hat{u}_{j|i} v_j$。 其中$a_{ij} = \hat{u}_{j|i} v_j$表示$capsule_j$（即$v_j$）跟$capsule_i$的prediction vector（即$\hat{u}_{j|i}$）的agreement（契合度）。<strong>值越大，表示两个向量的方向越相似，两个向量所表示的性质越相近</strong>。由 $c_{ij}$ 的公式知，$b_{ij}$ 的值越大（意味着两个向量的方向越相似），$c_{ij}$ 的值越大，<strong>$capsule_i$ 越倾向于将信息传送给 $capsule_j$</strong> 。</li>
+<li>$c_{ij}$： 由动态路由算法更新的coupling coefficients，并且 $\sum<em>{i} c\</em>{ij} = 1$（此时 $j$ 为某确定的常数）</li>
 </ul>
 <script type="math/tex; mode=display">s_j = \sum_{i} c_{ij} \hat{u}_{j|i} \tag{3}</script><ul>
 <li>$s_j$： $capsule_j$ 的所有input之和。</li>
@@ -440,15 +437,11 @@
 <li>$squash()$： 非线性函数，保留了向量的方向，使长的向量越长，短的向量越短，并且长度都压缩在0-1之内</li>
 <li>$v_j$： 由dynamic routing计算出来的PrimaryCaps的output。在文章中就是指最后的输出DigitCaps，共有10个（因为有10个数字，即10类）Capsule。每个capsule有16维，每一维都代表着数字的某些属性（粗细、倾斜程度等等）。<strong>向量的长度代表了当前输入是类 $j$ 的概率</strong>。</li>
 </ul>
-<p><br></p>
-<h4 id="Dynamic-Routing算法流程"><a href="#Dynamic-Routing算法流程" class="headerlink" title="Dynamic Routing算法流程"></a>Dynamic Routing算法流程</h4><p><br></p>
-<p><img src="/images/procedure1.png" alt=""></p>
+<h4 id="Dynamic-Routing算法流程"><a href="#Dynamic-Routing算法流程" class="headerlink" title="Dynamic Routing算法流程"></a>Dynamic Routing算法流程</h4><p><img src="/images/procedure1.png" alt=""></p>
 <p>整个过程如下所示（图片来自<a href="https://github.com/naturomics/" target="_blank" rel="noopener">naturomics</a>的ppt）：</p>
 <p><img src="/images/capsule_routingbyagreement.png" alt=""></p>
-<p><br></p>
 <h4 id="Reconstruction"><a href="#Reconstruction" class="headerlink" title="Reconstruction"></a>Reconstruction</h4><p>CapsNet使用Reconstruction作为Regularization。其做法是将DigitCaps的十个输出向量$v_j$中长度最长的向量，经过3个FC层（结构如下图所示）重构出原来的图像，通过对比重构的图像和原图像的差异(pixel-wise)，得到reconstruction loss。用来重构的这三个FC层一起称为<code>Decoder</code>。</p>
 <p><img src="/images/capsule_decoder.png" alt=""></p>
-<p><br></p>
 <h4 id="Total-loss"><a href="#Total-loss" class="headerlink" title="Total loss"></a>Total loss</h4><p>由于有多个类的存在，所以不能用cross entropy，论文中使用了SVM中常用的损失函数Margin loss来代替</p>
 <p><strong>Margin loss</strong></p>
 <p><img src="/images/cap_lossfunc.png" alt=""></p>
@@ -465,7 +458,6 @@
 <li>| 示例 | 输入输出 | $|v_k|$ | $L_k$ |<br>| — | ——————————- | ——- | ——- |<br>| TT | 输入数字k 预测结果为数字k | 比较大 | 比较小 |<br>| TF | 输入数字k 预测结果非数字k | 比较小 | 比较大 |<br>| FT | 输入非数字k 预测结果为数字k | 比较大 | 比较大 |<br>| FF | 输入非数字k 预测结果非数字k | 比较小 | 比较小 |</li>
 <li>可以看出，在假阳性和假阴性的示例中，$L_k$的值比较大。</li>
 </ul>
-<p><br></p>
 <p><strong>Reconstruction loss</strong></p>
 <p>计算原图像与重构的图像在对应的pixel位置上的值之差，求和得到Reconstruction loss</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将原图像x(<span class="number">28</span>, <span class="number">28</span>)reshape成orgin(<span class="number">784</span>)</span><br><span class="line">再将重构的图像decoded(<span class="number">784</span>)</span><br><span class="line">squared = square(decoded - orgin)</span><br><span class="line">reconstruction_loss = mean(squared)</span><br></pre></td></tr></table></figure>
