@@ -87,15 +87,15 @@
 <meta property="og:site_name" content="SIGMA&#39;s BLOG">
 <meta property="og:description" content="卷积操作$$O = \frac{W-K+2P}{S}+1$$ $O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride stride = 1  stride = 2  Padding padding的计算公式与conv一样 zero padding  $$Zero Padding = \frac{(K-1)}{2}$$ 有这些情况会使">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-c4a7b49deda73e2b26232d12db7e77c6_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-16ad975f95ef7a45ab836fa563e73736_b.png">
-<meta property="og:image" content="https://pic2.zhimg.com/v2-a944f0f847266c28ad93f2b6b9986e65_b.png">
-<meta property="og:updated_time" content="2017-12-23T03:02:09.525Z">
+<meta property="og:image" content="http://yoursite.com/images/CNN_stride1.png">
+<meta property="og:image" content="http://yoursite.com/images/CNN_stride2.png">
+<meta property="og:image" content="http://yoursite.com/images/CNN_padding.png">
+<meta property="og:image" content="http://yoursite.com/images/CNN_maxpooling">
+<meta property="og:updated_time" content="2017-12-23T05:08:46.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convolutional Neural Networks">
 <meta name="twitter:description" content="卷积操作$$O = \frac{W-K+2P}{S}+1$$ $O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride stride = 1  stride = 2  Padding padding的计算公式与conv一样 zero padding  $$Zero Padding = \frac{(K-1)}{2}$$ 有这些情况会使">
-<meta name="twitter:image" content="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png">
+<meta name="twitter:image" content="http://yoursite.com/images/CNN_stride1.png">
 
 
 
@@ -382,9 +382,9 @@
         <h3 id="卷积操作"><a href="#卷积操作" class="headerlink" title="卷积操作"></a><em>卷积操作</em></h3><p>$$O = \frac{W-K+2P}{S}+1$$</p>
 <p>$O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride</p>
 <p><em>stride = 1</em></p>
-<p><img src="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png" alt=""></p>
+<p><img src="/images/CNN_stride1.png" alt=""></p>
 <p><em>stride = 2</em></p>
-<p><img src="https://pic3.zhimg.com/v2-c4a7b49deda73e2b26232d12db7e77c6_b.png" alt=""></p>
+<p><img src="/images/CNN_stride2.png" alt=""></p>
 <h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a><em>Padding</em></h3><ul>
 <li>padding的计算公式与conv一样</li>
 <li>zero padding</li>
@@ -395,10 +395,10 @@
 <li>卷积后image尺寸很小，但我们又想使用conv</li>
 <li>由于image尺寸跟filter尺寸的原因</li>
 </ul>
-<p><img src="https://pic3.zhimg.com/v2-16ad975f95ef7a45ab836fa563e73736_b.png" alt=""></p>
+<p><img src="/images/CNN_padding.png" alt=""></p>
 <h3 id="pooling"><a href="#pooling" class="headerlink" title="pooling"></a><em>pooling</em></h3><p>也叫downsampling（下采样）层，最常用的是max-pooling</p>
 <p><em>stride = 2</em></p>
-<p><img src="https://pic2.zhimg.com/v2-a944f0f847266c28ad93f2b6b9986e65_b.png" alt=""></p>
+<p><img src="/images/CNN_maxpooling" alt=""></p>
 <h3 id="ReLu"><a href="#ReLu" class="headerlink" title="ReLu"></a><em>ReLu</em></h3><p>优点：</p>
 <ul>
 <li>因为它在准确度不发生明显改变的情况下能把训练速度提高很多</li>

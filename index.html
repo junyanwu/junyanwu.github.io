@@ -1007,9 +1007,9 @@
             <h3 id="卷积操作"><a href="#卷积操作" class="headerlink" title="卷积操作"></a><em>卷积操作</em></h3><p>$$O = \frac{W-K+2P}{S}+1$$</p>
 <p>$O$是output_shape，$W$是image，$K$是filter，$P$是padding，$S$是stride</p>
 <p><em>stride = 1</em></p>
-<p><img src="https://pic4.zhimg.com/v2-504ba01c8af8e2d7d41957ddaa4fe6d3_b.png" alt=""></p>
+<p><img src="/images/CNN_stride1.png" alt=""></p>
 <p><em>stride = 2</em></p>
-<p><img src="https://pic3.zhimg.com/v2-c4a7b49deda73e2b26232d12db7e77c6_b.png" alt=""></p>
+<p><img src="/images/CNN_stride2.png" alt=""></p>
 <h3 id="Padding"><a href="#Padding" class="headerlink" title="Padding"></a><em>Padding</em></h3><ul>
 <li>padding的计算公式与conv一样</li>
 <li>zero padding</li>
@@ -1020,10 +1020,10 @@
 <li>卷积后image尺寸很小，但我们又想使用conv</li>
 <li>由于image尺寸跟filter尺寸的原因</li>
 </ul>
-<p><img src="https://pic3.zhimg.com/v2-16ad975f95ef7a45ab836fa563e73736_b.png" alt=""></p>
+<p><img src="/images/CNN_padding.png" alt=""></p>
 <h3 id="pooling"><a href="#pooling" class="headerlink" title="pooling"></a><em>pooling</em></h3><p>也叫downsampling（下采样）层，最常用的是max-pooling</p>
 <p><em>stride = 2</em></p>
-<p><img src="https://pic2.zhimg.com/v2-a944f0f847266c28ad93f2b6b9986e65_b.png" alt=""></p>
+<p><img src="/images/CNN_maxpooling" alt=""></p>
 <h3 id="ReLu"><a href="#ReLu" class="headerlink" title="ReLu"></a><em>ReLu</em></h3><p>优点：</p>
 <ul>
 <li>因为它在准确度不发生明显改变的情况下能把训练速度提高很多</li>
@@ -1738,7 +1738,7 @@
 </ul>
 <hr>
 <h3 id="卷积化"><a href="#卷积化" class="headerlink" title="卷积化"></a>卷积化</h3><p>FC换成Conv以保留图像的空间信息</p>
-<p><img src="https://pic3.zhimg.com/42d85c5f7ddcb3f527666b250f62f5d6_b.png" alt=""></p>
+<p><img src="/images/FCN_structure.png" alt=""></p>
 <hr>
 <h3 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h3><blockquote>
 <p>此处的上采样即是反卷积（Deconvolution）。当然关于这个名字不同框架不同，Caffe和Kera里叫Deconvolution，而tensorflow里叫conv_transpose。CS231n这门课中说，叫conv_transpose更为合适。</p>
