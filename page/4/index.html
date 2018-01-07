@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="记录日常以及学习路程">
+<meta name="description" content="读研中">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SIGMA&#39;s BLOG">
 <meta property="og:url" content="http://yoursite.com/page/4/index.html">
 <meta property="og:site_name" content="SIGMA&#39;s BLOG">
-<meta property="og:description" content="记录日常以及学习路程">
+<meta property="og:description" content="读研中">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SIGMA&#39;s BLOG">
-<meta name="twitter:description" content="记录日常以及学习路程">
+<meta name="twitter:description" content="读研中">
 
 
 
@@ -170,7 +170,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">CB116</p>
+        <p class="site-subtitle">但行好事，莫问前程</p>
       
   </div>
 
@@ -272,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/linux/挂载硬盘/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/linux/开机自启动程序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Junyan Wu">
@@ -291,7 +291,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/21/linux/挂载硬盘/" itemprop="url">Linux下挂载硬盘</a></h1>
+                <a class="post-title-link" href="/2017/12/21/linux/开机自启动程序/" itemprop="url">Linux下开机自启动程序</a></h1>
         
 
         <div class="post-meta">
@@ -344,9 +344,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/12/21/linux/挂载硬盘/#comments" itemprop="discussionUrl">
+                <a href="/2017/12/21/linux/开机自启动程序/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/12/21/linux/挂载硬盘/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/12/21/linux/开机自启动程序/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,7 +354,7 @@
 
           
           
-             <span id="/2017/12/21/linux/挂载硬盘/" class="leancloud_visitors" data-flag-title="Linux下挂载硬盘">
+             <span id="/2017/12/21/linux/开机自启动程序/" class="leancloud_visitors" data-flag-title="Linux下开机自启动程序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -387,13 +387,12 @@
       
         
           
-          sudo blkid
-vim /etc/fstab
-1234567UUID=7f2b5d4e-f224-488b-a1ea-db4bb238c927 /               ext4    errors=remount-ro 0       1# /home was on /dev/sdb5
+          http://www.cnblogs.com/nerxious/archive/2013/01/18/2866548.html
+开机启动时自动运行程序linux加载后，它将初始化硬件和设备驱动，然后运行第一个进程init，init根据配置文件继续引导过程，启动其他进程。可以进/etc/init.d查
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/21/linux/挂载硬盘/#more" rel="contents">
+            <a class="btn" href="/2017/12/21/linux/开机自启动程序/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -963,6 +962,177 @@ import文件夹A的py文件
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Junyan Wu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SIGMA's BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" itemprop="url">同一项目下py文件的执行顺序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T11:05:23+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" class="leancloud_visitors" data-flag-title="同一项目下py文件的执行顺序">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          假如有一个py文件如下
+12345678910# config.pyimport argparseparser = argparse.ArgumentParser()arg_list = []def get_config():    config, unparsed = parser.parse_k
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/python/tqdm使用说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1085,177 +1255,6 @@ import文件夹A的py文件
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/12/21/python/tqdm使用说明/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Junyan Wu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SIGMA's BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" itemprop="url">同一项目下py文件的执行顺序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T11:05:23+08:00">
-                2017-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/" class="leancloud_visitors" data-flag-title="同一项目下py文件的执行顺序">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          假如有一个py文件如下
-12345678910# config.pyimport argparseparser = argparse.ArgumentParser()arg_list = []def get_config():    config, unparsed = parser.parse_k
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/21/python/包含全局内容+函数定义的py文件的内容的执行顺序/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1508,7 +1507,7 @@ import文件夹A的py文件
                 alt="Junyan Wu" />
             
               <p class="site-author-name" itemprop="name">Junyan Wu</p>
-              <p class="site-description motion-element" itemprop="description">记录日常以及学习路程</p>
+              <p class="site-description motion-element" itemprop="description">读研中</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -1540,7 +1539,7 @@ import文件夹A的py文件
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1556,13 +1555,19 @@ import文件夹A的py文件
                 <span class="links-of-author-item">
                   <a href="https://github.com/junyanwu" target="_blank" title="GitHub">
                     
-                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
                   <a href="https://www.zhihu.com/people/zhi-xing-32/activities" target="_blank" title="知乎">
                     
                       <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.jianshu.com/u/340c04f035d3" target="_blank" title="简书">
+                    
+                      <i class="fa fa-fw fa-globe"></i>简书</a>
                 </span>
               
             
@@ -1593,7 +1598,7 @@ import文件夹A的py文件
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
