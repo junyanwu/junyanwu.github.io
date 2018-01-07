@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/images/capsule_ex3.jpg">
 <meta property="og:image" content="http://yoursite.com/images/capsule_multiMNIST.png">
 <meta property="og:image" content="http://yoursite.com/images/capsule_diff.png">
-<meta property="og:updated_time" content="2017-12-23T13:00:24.920Z">
+<meta property="og:updated_time" content="2017-12-26T01:21:35.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dynamic Routing Between Capsules论文阅读">
 <meta name="twitter:description" content="Intro本文记录了阅读论文《Dynamic Routing Between Capsules》以及naturomics的代码的理解与收获，若有错误欢迎指出（wjy.f@qq.com），转载请注明出处。 若想通过视频快速了解，可以看看下面两个链接，讲得比较生动易理解（不过还是推荐读论文）：  Capsule Networks教程(by Aurélie) 用Tensorflow实现Capsule(b">
@@ -419,12 +419,12 @@
 <ol>
 <li><p>image(28 * 28)</p>
 </li>
-<li><p>images $\to$ <code>Conv(num_outputs=256, kernel_size=9, stride=1, padding=&#39;VALID&#39;) + ReLU</code> $\to$ Conv1(256 <em> 20 </em> 20)</p>
+<li><p>images $\to$ <code>Conv(num_outputs=256, kernel_size=9, stride=1, padding=&#39;VALID&#39;) + ReLU</code> $\to$ Conv1(256*20*20)</p>
 </li>
-<li><p>Conv1 $\to$ <code>Conv(num_outputs=256, kernel_size=9, stride=2, padding=&quot;VALID&quot;) + ReLU</code> $\to$ PrimaryCaps(256 <em> 6 </em> 6)</p>
+<li><p>Conv1 $\to$ <code>Conv(num_outputs=256, kernel_size=9, stride=2, padding=&quot;VALID&quot;) + ReLU</code> $\to$ PrimaryCaps(256*6*6)</p>
 </li>
 </ol>
-<p>这里可能会有人奇怪，这里不过是用了256个filter产生256个feature map，图片为什么会画成(32 <em> 8 </em> 6 * 6)的形式，这是因为后面的路由算法是将一个长度为8的向量当做一个整体来计算的。</p>
+<p>这里可能会有人奇怪，这里不过是用了256个filter产生256个feature map，图片为什么会画成(32*8*6*6)的形式，这是因为后面的路由算法是将一个长度为8的向量当做一个整体来计算的。</p>
 <h3 id="PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing"><a href="#PrimaryCaps-to-DigitCaps-amp-Dynamic-Routing" class="headerlink" title="PrimaryCaps to DigitCaps &amp; Dynamic Routing"></a>PrimaryCaps to DigitCaps &amp; Dynamic Routing</h3><ul>
 <li>下面讲解从PrimaryCaps $\to$ DigitCaps的计算过程，其中主要应用了<em>Routing-By-Agreement Mechanism</em></li>
 </ul>
@@ -436,9 +436,9 @@
 <li>$u_i(i \in [6 × 6 × 32])$： 表示PrimaryCaps的某个8D的Capsule</li>
 <li>$\hat{u}_{j|i}$： 论文中称之为低一层的capsules的“prediction vectors”</li>
 </ul>
-<script type="math/tex; mode=display">c\_{ij} = \frac{exp(b_{ij})}{\sum_{k}exp(b_{ik})} \tag{2}</script><ul>
+<script type="math/tex; mode=display">c_{ij} = \frac{exp(b_{ij})}{\sum_{k}exp(b_{ik})} \tag{2}</script><ul>
 <li>$b_{ij}$： 初始化为0，更新方法是 $b_{ij} \leftarrow b_{ij} + \hat{u}_{j|i} v_j$。 其中$a_{ij} = \hat{u}_{j|i} v_j$表示$capsule_j$（即$v_j$）跟$capsule_i$的prediction vector（即$\hat{u}_{j|i}$）的agreement（契合度）。<strong>值越大，表示两个向量的方向越相似，两个向量所表示的性质越相近</strong>。由 $c_{ij}$ 的公式知，$b_{ij}$ 的值越大（意味着两个向量的方向越相似），$c_{ij}$ 的值越大，<strong>$capsule_i$ 越倾向于将信息传送给 $capsule_j$</strong> 。</li>
-<li>$c_{ij}$： 由动态路由算法更新的coupling coefficients，并且 $\sum<em>{i} c\</em>{ij} = 1$（此时 $j$ 为某确定的常数）</li>
+<li>$c_{ij}$： 由动态路由算法更新的coupling coefficients，并且 $\sum<em>{i} c\</em>{ij} = 1$（此时$j$为某确定的常数）</li>
 </ul>
 <script type="math/tex; mode=display">s_j = \sum_{i} c_{ij} \hat{u}_{j|i} \tag{3}</script><ul>
 <li>$s_j$： $capsule_j$ 的所有input之和。</li>
@@ -545,8 +545,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/21/deeplearning/paper/GCRN/" rel="next" title="GCRN代码解读">
-                <i class="fa fa-chevron-left"></i> GCRN代码解读
+              <a href="/2017/12/21/deeplearning/离散的笔记/Sparse_matrix/" rel="next" title="Sparse matrix">
+                <i class="fa fa-chevron-left"></i> Sparse matrix
               </a>
             
           </div>
@@ -555,8 +555,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/21/linux/Ubuntu+GTX970无法安装Ubuntu|安装完后黑屏/" rel="prev" title="GTX970无法安装Ubuntu16.04|安装后黑屏">
-                GTX970无法安装Ubuntu16.04|安装后黑屏 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/21/deeplearning/离散的笔记/RNN/" rel="prev" title="关于RNN的一些问题">
+                关于RNN的一些问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -654,7 +654,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -665,7 +665,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -676,7 +676,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -745,7 +745,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
